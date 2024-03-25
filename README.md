@@ -1,3 +1,6 @@
-working on it. This is how it looks right now
-![image](https://github.com/itsPronay/RemindMeApk/assets/78101731/58732b9a-0bd2-4270-9f35-e8a0320649bf) ![image](https://github.com/itsPronay/RemindMeApk/assets/78101731/afb0be35-4a69-4179-8227-2d0f0ec9d983)
+Still working on it, this is how it looks right now
+
+![image](https://github.com/itsPronay/RemindMeApk/assets/78101731/bb60f6f5-62ab-4dbd-8513-e98a016fffc9)
+![image](https://github.com/itsPronay/RemindMeApk/assets/78101731/44b93c74-0b31-4be3-bf28-b31ab5f4bccb)
+
 
