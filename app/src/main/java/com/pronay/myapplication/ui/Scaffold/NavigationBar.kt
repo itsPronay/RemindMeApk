@@ -18,7 +18,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.google.android.material.bottomappbar.BottomAppBar
+import androidx.navigation.NavController
 import com.pronay.myapplication.ui.Styles.BoldTextStyle
 import com.pronay.myapplication.ui.Styles.NormalTextStyle
 
@@ -31,7 +31,7 @@ data class BottomNavigationItem(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomBar() {
+fun BottomBar(navController: NavController) {
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
@@ -67,6 +67,7 @@ fun BottomBar() {
                 },
                 onClick = {
                     selectedIndex = index
+                    navController.navigate(item.title)
                 },
                 icon = {
                     BadgedBox(badge = {

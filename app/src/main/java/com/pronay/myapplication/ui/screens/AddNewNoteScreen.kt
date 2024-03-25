@@ -1,10 +1,8 @@
 package com.pronay.myapplication.ui.screens
 
-import android.app.TimePickerDialog
-import android.widget.HorizontalScrollView
-import android.widget.Space
+import android.os.Build
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TimePicker
-import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
@@ -41,20 +38,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.pronay.myapplication.functions.timePickerStateTo12HourString
+import com.pronay.myapplication.functions.timePickerStateToString
 import com.pronay.myapplication.ui.Scaffold.TopApkBar
 import com.pronay.myapplication.ui.viewmodel.AddNoteViewmodel
 import milliSecondsToDate
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddNewNote(navController: NavController, viewmodel: AddNoteViewmodel, supportingText : String? = "") {
 
     Scaffold(
         topBar = {
-            TopApkBar(title = "Add new task", navController = navController, viewmodel = viewmodel)
+            TopApkBar(titleString = "Add new task", navController = navController, viewmodel = viewmodel)
         }
     ) {
         Column(
@@ -148,18 +145,17 @@ fun AddNewNote(navController: NavController, viewmodel: AddNoteViewmodel, suppor
             time picker logic
              */
 
-            val timeState = rememberTimePickerState(is24Hour = false)
+            val timeState = rememberTimePickerState()
             if(openTimePicker){
                 AlertDialog(
                     onDismissRequest = { openDatePicker = false },
                     confirmButton = {
                                     TextButton(onClick = {
-//                                        write code here for ok button
-
-
-
-
-
+//                                 write code here for ok button
+                                        openTimePicker = false
+                                        var time = timePickerStateTo12HourString(timeState)
+                                        viewmodel.updateTime(time)
+                                        Toast.makeText(context,"hey ${time}",Toast.LENGTH_LONG).show()
 
                                     }) {
                                         Text(text = "Ok")
@@ -215,9 +211,6 @@ fun AddNewNote(navController: NavController, viewmodel: AddNoteViewmodel, suppor
                 modifier = Modifier
                     .fillMaxSize()
             )
-
-
-
         }
     }
 

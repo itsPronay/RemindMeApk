@@ -1,5 +1,7 @@
 package com.pronay.myapplication.nav
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +11,7 @@ import com.pronay.myapplication.ui.screens.HomeScreen
 import com.pronay.myapplication.ui.viewmodel.AddNoteViewmodel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Nav(viewmodel: AddNoteViewmodel) {
     val navController = rememberNavController()
