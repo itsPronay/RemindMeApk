@@ -8,7 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pronay.myapplication.ui.screens.AddNewNote
 import com.pronay.myapplication.ui.screens.HomeScreen
-import com.pronay.myapplication.ui.viewmodel.AddNoteViewmodel
+import com.pronay.myapplication.ui.AddNoteViewmodel
+import com.pronay.myapplication.ui.screens.TrashScreen
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -21,6 +22,9 @@ fun Nav(viewmodel: AddNoteViewmodel) {
         }
         composable(route = Route.AddNewNote.name){
             AddNewNote(navController, viewmodel)
+        }
+        composable(route = Route.Trash.name){
+            TrashScreen(navController = navController, viewmodel = viewmodel)
         }
     }
 }

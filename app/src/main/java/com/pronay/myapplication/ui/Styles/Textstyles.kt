@@ -33,6 +33,7 @@ fun RemindTitleStyle(title : String) {
 fun RemindDetailsStyle(details : String) {
     Text(text = details,
         modifier = Modifier.padding(start = 24.dp),
-        fontSize = 11.sp
+        fontSize = 11.sp,
+        lineHeight =11.sp
     )
 }

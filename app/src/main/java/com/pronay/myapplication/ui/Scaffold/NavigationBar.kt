@@ -15,6 +15,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -31,7 +32,7 @@ data class BottomNavigationItem(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomBar(navController: NavController) {
+fun NavBarBottom(navController: NavController) {
     val items = listOf(
         BottomNavigationItem(
             title = "Home",
@@ -49,7 +50,7 @@ fun BottomBar(navController: NavController) {
             notSelectedIcon = Icons.Outlined.Delete,
         )
     )
-    var selectedIndex by rememberSaveable {
+    var selectedIndex by remember {
         mutableIntStateOf(0)
     }
 
@@ -66,8 +67,8 @@ fun BottomBar(navController: NavController) {
                     }
                 },
                 onClick = {
-                    selectedIndex = index
                     navController.navigate(item.title)
+                    selectedIndex = index
                 },
                 icon = {
                     BadgedBox(badge = {

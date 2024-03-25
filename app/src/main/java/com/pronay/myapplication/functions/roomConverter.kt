@@ -1,4 +1,4 @@
-package com.pronay.myapplication.functions.date
+package com.pronay.myapplication.functions
 
 import android.os.Build
 import androidx.annotation.RequiresApi

@@ -38,10 +38,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.pronay.myapplication.functions.fromLocalTime
 import com.pronay.myapplication.functions.timePickerStateTo12HourString
-import com.pronay.myapplication.functions.timePickerStateToString
+import com.pronay.myapplication.functions.timePickerStateToLocalTime
+import com.pronay.myapplication.functions.timePickerStateToLocalTime12
 import com.pronay.myapplication.ui.Scaffold.TopApkBar
-import com.pronay.myapplication.ui.viewmodel.AddNoteViewmodel
+import com.pronay.myapplication.ui.AddNoteViewmodel
 import milliSecondsToDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -117,6 +119,11 @@ fun AddNewNote(navController: NavController, viewmodel: AddNoteViewmodel, suppor
                     openDatePicker = false
                 }, confirmButton = {
                     TextButton(onClick = {
+
+                        // for room DB
+                        state.selectedDateMillis?.let { it1 -> viewmodel.updateDateRoom(it1) }
+
+                        //to show in the textfield
                         openDatePicker = false
                         val date : String = milliSecondsToDate(state.selectedDateMillis)
                         viewmodel.updateDate(date)
@@ -145,13 +152,19 @@ fun AddNewNote(navController: NavController, viewmodel: AddNoteViewmodel, suppor
             time picker logic
              */
 
-            val timeState = rememberTimePickerState()
+            val timeState = rememberTimePickerState(is24Hour = false)
             if(openTimePicker){
                 AlertDialog(
                     onDismissRequest = { openDatePicker = false },
                     confirmButton = {
                                     TextButton(onClick = {
-//                                 write code here for ok button
+                                        //convert it to LocalTime
+                                        //convert it to string and update viewmodel
+                                        val localTime = timePickerStateToLocalTime12(timeState)
+                                        val localTimeString = fromLocalTime(localTime)
+                                        viewmodel.updateTimeRoom(localTimeString) //is in 24h format
+
+                                        // this is to show on the textfield
                                         openTimePicker = false
                                         var time = timePickerStateTo12HourString(timeState)
                                         viewmodel.updateTime(time)

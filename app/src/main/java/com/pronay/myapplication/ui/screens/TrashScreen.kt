@@ -9,15 +9,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,40 +32,30 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.pronay.myapplication.data.Reminder
-import com.pronay.myapplication.nav.Route
+import com.pronay.myapplication.ui.AddNoteViewmodel
 import com.pronay.myapplication.ui.Scaffold.NavBarBottom
 import com.pronay.myapplication.ui.Scaffold.TopApkBar
 import com.pronay.myapplication.ui.Styles.RemindDetailsStyle
 import com.pronay.myapplication.ui.Styles.RemindTitleStyle
-import com.pronay.myapplication.ui.AddNoteViewmodel
 import milliSecondsToDate
 
-
 @Composable
-fun HomeScreen(navController: NavController, viewmodel: AddNoteViewmodel) {
+fun TrashScreen(navController: NavController, viewmodel: AddNoteViewmodel) {
     val reminderList = viewmodel.getAllReminder.collectAsState(initial = listOf())
     Scaffold(
         topBar = {
-            TopApkBar(titleString = "Dashboard", navController = navController)
+            TopApkBar(titleString = "Trash", navController = navController)
         },
         bottomBar = {
-            NavBarBottom(navController)
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                navController.navigate(Route.AddNewNote.name)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Add, contentDescription = ""
-                )
-            }
+            NavBarBottom(navController = navController)
         }
     ) {
         LazyColumn(
             modifier = Modifier.padding(it),
+
             content = {
                 items(reminderList.value) { remind ->
-                    if (!remind.deleted) { // wont pass deleted data into the home page
+                    if (remind.deleted) { // wont pass deleted data into the home page
                         cardView(remind = remind, viewmodel = viewmodel)
                     }
                 }
@@ -74,9 +64,8 @@ fun HomeScreen(navController: NavController, viewmodel: AddNoteViewmodel) {
     }
 }
 
-
 @Composable
-fun cardView(remind: Reminder, viewmodel: AddNoteViewmodel) {
+fun cardView2(remind: Reminder, viewmodel: AddNoteViewmodel) {
     var showDetails by remember {
         mutableStateOf(true)
     }
@@ -127,14 +116,14 @@ fun cardView(remind: Reminder, viewmodel: AddNoteViewmodel) {
                                     date = remind.date,
                                     time = remind.time,
                                     stared = remind.stared,
-                                    deleted = true
+                                    deleted = false
                                 )
                             )
                             viewmodel.delete(remind)
 
                         }) {
                             Icon(
-                                imageVector = Icons.Default.Delete, contentDescription = "",
+                                imageVector = Icons.Default.Refresh, contentDescription = "",
                                 modifier = Modifier.size(20.dp)
                             )
                         }
